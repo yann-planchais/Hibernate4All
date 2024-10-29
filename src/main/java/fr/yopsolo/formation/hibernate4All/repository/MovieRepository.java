@@ -14,15 +14,17 @@ import jakarta.transaction.Transactional;
 @Repository
 public class MovieRepository {
 
-	Logger LOGGER = LoggerFactory.getLogger(MovieRepository.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MovieRepository.class);
 	
 	@PersistenceContext
 	EntityManager entityManager;
 	
 	@Transactional
 	public void persist(Movie pMovie) {
-		LOGGER.trace("entityManager.contains() : %", entityManager.contains(pMovie)	); // Vérifie si l'objet est managé déjà par Hibernate
+		LOGGER.trace("entityManager.contains() : {}", entityManager.contains(pMovie)	); // Vérifie si l'objet est managé déjà par Hibernate
 		entityManager.persist(pMovie);
+		LOGGER.trace("entityManager.contains() : {}", entityManager.contains(pMovie)	); // Vérifie si l'objet est managé déjà par Hibernate
+
 	}
 	
 	public List<Movie> getAll() {

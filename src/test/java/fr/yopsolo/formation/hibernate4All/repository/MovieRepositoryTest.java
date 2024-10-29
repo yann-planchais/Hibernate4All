@@ -19,10 +19,9 @@ public class MovieRepositoryTest {
 	@Test
 	public void save_casNominal() {
 		Movie movie = new Movie();
-		movie.setName("Inception");	
-		
+		movie.setName("Inception");			
 		repository.persist(movie);
-		 System.out.println("FIN DE TEST");
+
 	}
 
 }
