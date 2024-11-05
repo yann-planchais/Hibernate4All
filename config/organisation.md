@@ -4,4 +4,5 @@ Organisation du cours et du projet
 	transcient/managé/détaché/supprimé
 	=> 	On s'appuie sur les objets Movie
 	
-	
+2] Partie 2: partie dirty checking
+   => On s'appoue sur les objets MovieWithDescription
