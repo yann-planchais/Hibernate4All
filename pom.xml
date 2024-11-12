@@ -45,10 +45,15 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency> 
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 		</dependency>
 
 		<!-- TESTS -->
@@ -62,7 +67,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			   <version>6.6.1.Final</version>
+			<version>6.6.1.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.persistence</groupId>

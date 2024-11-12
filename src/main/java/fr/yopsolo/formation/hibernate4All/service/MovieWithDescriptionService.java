@@ -21,4 +21,11 @@ public class MovieWithDescriptionService {
 		// A la fin de la transaction, il va push les modifications
 	}
 
+	@Transactional
+	public void create(MovieWithDescription pMovie) {
+
+		movieWithDescriptionRepository.persist(pMovie);
+
+	}
+
 }

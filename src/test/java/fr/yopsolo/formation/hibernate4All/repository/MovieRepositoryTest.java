@@ -16,11 +16,11 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import fr.yopsolo.formation.hibernate4All.config.PersistenceConfig;
+import fr.yopsolo.formation.hibernate4All.config.PersistenceConfigTest;
 import fr.yopsolo.formation.hibernate4All.domain.Movie;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { PersistenceConfig.class })
+@ContextConfiguration(classes = { PersistenceConfigTest.class })
 @SqlConfig(dataSource = "dataSourceH2Test", transactionManager = "transactionManagerDeTest")
 @Sql(value = { "/datas/init-data-movie.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_CLASS)
 public class MovieRepositoryTest {
