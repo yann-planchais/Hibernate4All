@@ -28,7 +28,7 @@
 		<connection />
 		<developerConnection />
 		<tag />
-		<url />
+		<url /> 
 	</scm>
 	<properties>
 		<java.version>21</java.version>
