@@ -1,6 +1,7 @@
 package fr.yopsolo.formation.hibernate4All.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +71,7 @@ public class MovieWithDescriptionRepository {
 	}
 
 	public List<MovieWithDescription> getAll() {
-		return entityManager.createQuery("from Movie", MovieWithDescription.class).getResultList();
+		return entityManager.createQuery("from MovieWithDescription", MovieWithDescription.class).getResultList();
 	}
 
 	@Transactional
@@ -80,11 +81,38 @@ public class MovieWithDescriptionRepository {
 	}
 
 	@Transactional
-	public void remove(Long pId) {
+	public Optional<MovieWithDescription> update(MovieWithDescription movie) {
 
+		if (movie == null || movie.getId() == null) {
+			return Optional.empty();
+		}
+		MovieWithDescription movieBdd = entityManager.find(MovieWithDescription.class, movie.getId());
+		if (movieBdd != null) {
+			movieBdd.setDescription(movie.getDescription());
+			movieBdd.setName(movie.getName());
+		}
+		return Optional.ofNullable(movieBdd);
+	}
+
+	@Transactional
+	public void remove(Long pId) {
 		MovieWithDescription movie = entityManager.find(MovieWithDescription.class, pId);
 		entityManager.remove(movie);
 
+	}
+
+	@Transactional
+	public boolean delete(Long pIdMovie) {
+		boolean result = false;
+
+		if (pIdMovie != null) {
+			MovieWithDescription movieBdd = entityManager.find(MovieWithDescription.class, pIdMovie);
+			if (movieBdd != null) {
+				entityManager.remove(movieBdd);
+				result = true;
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -114,4 +142,5 @@ public class MovieWithDescriptionRepository {
 		MovieWithDescription movie = entityManager.getReference(MovieWithDescription.class, pPrimaryKey);
 		return movie;
 	}
+
 }
