@@ -35,6 +35,15 @@ public class MovieRepositoryTestWithDescription {
 	}
 
 	@Test
+	public void save_casNominalFLuent() {
+		MovieWithDescription movie = new MovieWithDescription().setNameFluent("Inception 3")
+				.setDescriptionFluent("Film enorme")
+				.setCertificationFluent(Certification.INTERDIT_MOINS_12);
+		repository.persist(movie);
+
+	}
+
+	@Test
 	public void findById_casNominal() {
 		MovieWithDescription movie = repository.findById(-1L);
 		assertThat(movie.getName()).as("On aurait du trouver le film Inception").isEqualTo("Inception");

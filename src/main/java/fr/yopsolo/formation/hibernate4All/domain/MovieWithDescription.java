@@ -36,4 +36,26 @@ public class MovieWithDescription {
 	// @Enumerated Non utile car converter
 	private Certification certification;
 
+	// le return this sur les setter est une utilisation "fluent" : <br />
+	// ça permet l'enchainement des setters
+	public MovieWithDescription setIdFluent(Long pId) {
+		id = pId;
+		return this;
+	}
+
+	public MovieWithDescription setNameFluent(String pName) {
+		name = pName;
+		return this;
+	}
+
+	public MovieWithDescription setDescriptionFluent(String pDescription) {
+		description = pDescription;
+		return this;
+	}
+
+	public MovieWithDescription setCertificationFluent(Certification pCertification) {
+		certification = pCertification;
+		return this;
+	}
+
 }
