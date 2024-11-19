@@ -10,6 +10,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import fr.yopsolo.formation.hibernate4All.config.PersistenceConfigTest;
+import fr.yopsolo.formation.hibernate4All.domain.MovieWithDescription;
+import fr.yopsolo.formation.hibernate4All.domain.MovieWithDescription.Certification;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { PersistenceConfigTest.class })
@@ -21,7 +23,13 @@ public class MovieRepositoryTestWithDescription {
 	private MovieWithDescriptionRepository repository;
 
 	@Test
-	void updateDescription() {
+	public void save_casNominal() {
+		MovieWithDescription movie = new MovieWithDescription();
+		movie.setName("Inception 2");
+		movie.setDescription("Film enorme");
+		movie.setCertificationStockeEnInteger(Certification.INTERDIT_MOINS_12);
+		movie.setCertificationStockeEnString(Certification.INTERDIT_MOINS_16);
+		repository.persist(movie);
 
 	}
 
