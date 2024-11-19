@@ -24,7 +24,8 @@ public class PersistenceConfig {
 	LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSourcePostgreSQL());
-		em.setPackagesToScan(new String[] { "fr.yopsolo.formation.hibernate4All.domain" });
+		em.setPackagesToScan(new String[] { "fr.yopsolo.formation.hibernate4All.domain",
+				"fr.yopsolo.formation.hibernate4All.converter" });
 
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);

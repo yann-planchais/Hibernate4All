@@ -24,7 +24,8 @@ public class PersistenceConfigTest {
 	LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSourceH2Test());
-		em.setPackagesToScan(new String[] { "fr.yopsolo.formation.hibernate4All.domain" });
+		em.setPackagesToScan(new String[] { "fr.yopsolo.formation.hibernate4All.domain",
+				"fr.yopsolo.formation.hibernate4All.converter" });
 
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);
