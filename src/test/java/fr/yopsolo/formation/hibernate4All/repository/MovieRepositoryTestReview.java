@@ -2,6 +2,10 @@ package fr.yopsolo.formation.hibernate4All.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.hibernate.LazyInitializationException;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,18 +38,18 @@ public class MovieRepositoryTestReview {
 		movie.setName("Inception 1");
 		movie.setDescription("Film enorme");
 		movie.setCertification(Certification.INTERDIT_MOINS_12);
-		
+
 		Review review1 = new Review();
-		review1.setAuthor("paul");	
+		review1.setAuthor("paul");
 		review1.setContent("content 1");
 
 		Review review2 = new Review();
-		review2.setAuthor("mary");	
+		review2.setAuthor("mary");
 		review2.setContent("content 2");
-		
+
 		movie.getReviews().add(review1);
 		movie.getReviews().add(review2);
-		
+
 		repository.persist(movie);
 
 	}
@@ -56,20 +60,26 @@ public class MovieRepositoryTestReview {
 		movie.setName("Inception 2");
 		movie.setDescription("Film enorme");
 		movie.setCertification(Certification.INTERDIT_MOINS_12);
-		
+
 		Review review1 = new Review();
-		review1.setAuthor("paul");	
+		review1.setAuthor("paul");
 		review1.setContent("content 1");
 
 		Review review2 = new Review();
-		review2.setAuthor("mary");	
+		review2.setAuthor("mary");
 		review2.setContent("content 2");
-		
+
 		movie.addReview(review1);
 		movie.addReview(review2);
-		
+
 		repository.persist(movie);
 
 	}
 
+	@Test
+	public void testGet_lazyExceptionSurReview() {
+		MovieWithDescription movie = repository.findById(-1L);
+		
+		assertThrows(LazyInitializationException.class, () -> movie.getReviews().size());
+	}
 }
