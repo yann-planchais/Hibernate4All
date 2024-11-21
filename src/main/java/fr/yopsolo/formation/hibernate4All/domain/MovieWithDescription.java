@@ -4,8 +4,12 @@
 package fr.yopsolo.formation.hibernate4All.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import jakarta.persistence.CascadeType;
@@ -14,6 +18,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -46,7 +53,33 @@ public class MovieWithDescription {
 	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Review> reviews = new ArrayList<Review>();
 	
+	// Les objets Genre seron persisté lors d'un persist ou d'un merge du movie
+	@ManyToMany	(cascade = { CascadeType.PERSIST, CascadeType.MERGE})
+	// Definit les noms de la table et de ses attributs
+	@JoinTable(name = "movie_genre", joinColumns =  @JoinColumn(name ="movie_id"),
+	inverseJoinColumns = @JoinColumn(name = "genre_id"))
+	private Set<Genre> genres = new HashSet<>();
 	
+	public MovieWithDescription addGenre(Genre pGenreToAdd) {
+		if(pGenreToAdd != null) {
+			this.genres.add(pGenreToAdd);
+			pGenreToAdd.getMovies().add(this);
+		}
+		return this;
+	}
+	
+	public MovieWithDescription removeGenre(Genre pGenreToSuppress) {
+		if(pGenreToSuppress != null && this.genres.contains(pGenreToSuppress)) {
+			genres.remove(pGenreToSuppress);
+			pGenreToSuppress.getMovies().remove(this);
+		}
+		
+		return this;
+	}
+	
+	public Set<Genre> getGenres() {
+		return Collections.unmodifiableSet(this.genres);
+	}
 	public MovieWithDescription addReview(Review pReview) {
 		if(pReview != null) {
 			this.reviews.add(pReview);
