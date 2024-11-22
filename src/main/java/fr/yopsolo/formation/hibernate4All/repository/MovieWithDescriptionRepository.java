@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import fr.yopsolo.formation.hibernate4All.domain.MovieDetails;
 import fr.yopsolo.formation.hibernate4All.domain.MovieWithDescription;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -143,4 +144,11 @@ public class MovieWithDescriptionRepository {
 		return movie;
 	}
 
+	@Transactional
+	public void addMovieDetails(MovieDetails pMovieDetails, Long pIdMovie) {
+		MovieWithDescription movie = getReference(pIdMovie);
+		pMovieDetails.setMovieWithDescription(movie);
+		entityManager.persist(pMovieDetails);
+	}
+	
 }
