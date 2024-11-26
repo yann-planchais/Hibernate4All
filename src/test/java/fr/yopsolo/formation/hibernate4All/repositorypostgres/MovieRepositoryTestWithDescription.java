@@ -16,7 +16,7 @@ import fr.yopsolo.formation.hibernate4All.repository.MovieWithDescriptionReposit
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { PersistenceConfig.class })
-@SqlConfig(dataSource = "dataSourcePostgreSQL", transactionManager = "transactionManagerDeTest")
+@SqlConfig(dataSource = "dataSource", transactionManager = "transactionManagerDeTest")
 @Sql(value = {
 		"/datas/postgres/init-data-moviewithdescription.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_CLASS)
 public class MovieRepositoryTestWithDescription {

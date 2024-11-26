@@ -26,13 +26,10 @@ public class PersistenceConfig {
 	@Value("${database.url}")
 	private String databaseUrl;
 
-	@Value("${database.hbm2ddl}")
-	private String databasDdl;
-
 	@Bean
 	LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-		em.setDataSource(dataSourcePostgreSQL());
+		em.setDataSource(dataSource());
 		em.setPackagesToScan(new String[] { "fr.yopsolo.formation.hibernate4All.domain",
 				"fr.yopsolo.formation.hibernate4All.converter" });
 
@@ -44,7 +41,7 @@ public class PersistenceConfig {
 	}
 
 	@Bean
-	DataSource dataSourcePostgreSQL() {
+	DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.postgresql.Driver");
 		dataSource.setUrl(databaseUrl);
@@ -64,7 +61,7 @@ public class PersistenceConfig {
 
 	private Properties additionalProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", databasDdl);
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		return properties;
 	}
