@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,15 +22,24 @@ public class Review {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	
+
 	private String author;
-	
+
 	private String content;
 
+	@Min(value = 0)
+	@Max(value = 10, message = "Valeur trop haute")
+	private Integer rating;
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name ="movie_id")  // Non obligatoire. Indique la clé étrangère
+	@JoinColumn(name = "movie_id") // Non obligatoire. Indique la clé étrangère
 	private MovieWithDescription movie;
-	
+
+	public Review setRating(Integer pRating) {
+		rating = pRating;
+		return this;
+	}
+
 	@Override
 	public int hashCode() {
 		return 32;
@@ -36,20 +47,20 @@ public class Review {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
+		}
 		if (!(obj instanceof Review)) {
 			return false;
 		}
-		
+
 		Review other = (Review) obj;
-		if(id==null && other.getId() == null) {
-		return Objects.equals(author, other.author) && Objects.equals(content, other.content)
-				;
+		if (id == null && other.getId() == null) {
+			return Objects.equals(author, other.getAuthor()) && Objects.equals(content, other.getContent())
+					&& Objects.equals(rating, other.getRating());
 		} else {
-			return id != null && Objects.equals(id, other.id);
+			return id != null && Objects.equals(id, other.getId());
 		}
 	}
-	
-	
+
 }
