@@ -4,13 +4,11 @@
 package fr.yopsolo.formation.hibernate4All.domain;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -52,51 +50,75 @@ public class MovieWithDescription {
 
 	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Review> reviews = new ArrayList<Review>();
-	
+
+	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Award> awards = new ArrayList<Award>();
+
 	// Les objets Genre seron persisté lors d'un persist ou d'un merge du movie
-	@ManyToMany	(cascade = { CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	// Definit les noms de la table et de ses attributs
-	@JoinTable(name = "movie_genre", joinColumns =  @JoinColumn(name ="movie_id"),
-	inverseJoinColumns = @JoinColumn(name = "genre_id"))
+	@JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
 	private Set<Genre> genres = new HashSet<>();
-	
+
 	public MovieWithDescription addGenre(Genre pGenreToAdd) {
-		if(pGenreToAdd != null) {
+		if (pGenreToAdd != null) {
 			this.genres.add(pGenreToAdd);
 			pGenreToAdd.getMovies().add(this);
 		}
 		return this;
 	}
-	
+
 	public MovieWithDescription removeGenre(Genre pGenreToSuppress) {
-		if(pGenreToSuppress != null && this.genres.contains(pGenreToSuppress)) {
+		if (pGenreToSuppress != null && this.genres.contains(pGenreToSuppress)) {
 			genres.remove(pGenreToSuppress);
 			pGenreToSuppress.getMovies().remove(this);
 		}
-		
+
 		return this;
 	}
-	
+
 	public Set<Genre> getGenres() {
 		return Collections.unmodifiableSet(this.genres);
 	}
+
 	public MovieWithDescription addReview(Review pReview) {
-		if(pReview != null) {
+		if (pReview != null) {
 			this.reviews.add(pReview);
 			pReview.setMovie(this);
 		}
 		return this;
 	}
-	
+
 	public MovieWithDescription removeReview(Review pReview) {
-		if(pReview != null && this.reviews.contains(pReview)) {
+		if (pReview != null && this.reviews.contains(pReview)) {
 			reviews.remove(pReview);
 			pReview.setMovie(null);
 		}
-		
+
 		return this;
 	}
-	
+
+	public MovieWithDescription addAward(Award pAward) {
+		if (pAward != null) {
+			this.awards.add(pAward);
+			pAward.setMovie(this);
+		}
+		return this;
+	}
+
+	public MovieWithDescription removeAward(Award pAward) {
+		if (pAward != null && this.awards.contains(pAward)) {
+			awards.remove(pAward);
+			pAward.setMovie(null);
+		}
+
+		return this;
+	}
+
+	public List<Award> getAwards() {
+		return Collections.unmodifiableList(this.awards);
+	}
+
 	// le return this sur les setter est une utilisation "fluent" : <br />
 	// ça permet l'enchainement des setters
 	public MovieWithDescription setIdFluent(Long pId) {
@@ -126,12 +148,15 @@ public class MovieWithDescription {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		MovieWithDescription other = (MovieWithDescription) obj;
 		return certification == other.certification && Objects.equals(description, other.description)
 				&& Objects.equals(id, other.id) && Objects.equals(name, other.name)
