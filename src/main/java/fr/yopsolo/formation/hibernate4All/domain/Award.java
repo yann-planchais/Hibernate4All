@@ -23,7 +23,7 @@ public class Award {
 
 	private String name;
 
-	private Integer year;
+	private Integer annee;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "movie_id") // Non obligatoire. Indique la clé étrangère
@@ -45,7 +45,7 @@ public class Award {
 
 		Award other = (Award) obj;
 		if (id == null && other.getId() == null) {
-			return Objects.equals(name, other.getName()) && Objects.equals(year, other.getYear());
+			return Objects.equals(name, other.getName()) && Objects.equals(annee, other.getAnnee());
 		} else {
 			return id != null && Objects.equals(id, other.getId());
 		}

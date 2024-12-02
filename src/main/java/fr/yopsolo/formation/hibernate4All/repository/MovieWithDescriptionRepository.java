@@ -129,7 +129,8 @@ public class MovieWithDescriptionRepository {
 	@Transactional
 	public MovieWithDescription getReference(Long pPrimaryKey) {
 		MovieWithDescription movie = entityManager.getReference(MovieWithDescription.class, pPrimaryKey);
-		LOGGER.trace("Movie name : {}", movie.getName());
+		// Si on fait ça : LOGGER.trace("Movie name : {}", movie.getName());
+		// ça charge toute l'entité avec tous ses attributs
 		return movie;
 	}
 
@@ -150,5 +151,5 @@ public class MovieWithDescriptionRepository {
 		pMovieDetails.setMovieWithDescription(movie);
 		entityManager.persist(pMovieDetails);
 	}
-	
+
 }

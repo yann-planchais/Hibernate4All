@@ -37,11 +37,11 @@ public class MovieRepositoryTestAward {
 
 		Award award1 = new Award();
 		award1.setName("Oscar");
-		award1.setYear(2020);
+		award1.setAnnee(2020);
 
 		Award award2 = new Award();
 		award2.setName("Cesar");
-		award2.setYear(2020);
+		award2.setAnnee(2020);
 
 		movie.addAward(award1);
 		movie.addAward(award2);
@@ -56,7 +56,7 @@ public class MovieRepositoryTestAward {
 
 		Award award1 = new Award();
 		award1.setName("Oscar");
-		award1.setYear(2020);
+		award1.setAnnee(2020);
 
 		assertThrows(UnsupportedOperationException.class, () -> movie.getAwards().add(award1));
 	}

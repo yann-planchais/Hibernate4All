@@ -143,7 +143,12 @@ public class MovieWithDescription {
 
 	@Override
 	public int hashCode() {
-		return 31;
+		// la méthode par défaut générée ne convient pas pour les entités bdd lors de
+		// l'utilisation de Set
+		// une fois persisté, l'objet va changer de hashcode (du à l'id) et on ne
+		// retrouvera pas l'objet
+		// return Objects.hash(certification, name, description, id);
+		return 32;
 	}
 
 	@Override
@@ -151,16 +156,17 @@ public class MovieWithDescription {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
+		if (!(obj instanceof MovieWithDescription)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
+
 		MovieWithDescription other = (MovieWithDescription) obj;
-		return certification == other.certification && Objects.equals(description, other.description)
-				&& Objects.equals(id, other.id) && Objects.equals(name, other.name)
-				&& Objects.equals(reviews, other.reviews);
+		if (id == null && other.getId() == null) {
+			return Objects.equals(name, other.getName()) && Objects.equals(description, other.getDescription())
+					&& certification == other.certification;
+		}
+		return id != null && Objects.equals(id, other.getId());
+
 	}
 
 }
