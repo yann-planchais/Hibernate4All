@@ -1,10 +1,6 @@
 package fr.yopsolo.formation.hibernate4All.repository;
 
-
-import org.hibernate.LazyInitializationException;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,60 +13,43 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import fr.yopsolo.formation.hibernate4All.config.PersistenceConfigTest;
 import fr.yopsolo.formation.hibernate4All.domain.Certification;
-import fr.yopsolo.formation.hibernate4All.domain.MovieDetails;
 import fr.yopsolo.formation.hibernate4All.domain.MovieWithDescription;
-import fr.yopsolo.formation.hibernate4All.domain.Review;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { PersistenceConfigTest.class })
 @SqlConfig(dataSource = "dataSourceH2Test", transactionManager = "transactionManagerDeTest")
-@Sql(value = { "/datas/init-data-movie-details.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_CLASS)
-public class MovieRepositoryTestMovieDetails {
+@Sql(value = { "/datas/init-data-moviewithdescription.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_CLASS)
+public class MovieRepositoryWithDescriptionTest {
 
 	@Autowired
 	private MovieWithDescriptionRepository repository;
 
-	/**
-	 * 
-	 */
 	@Test
-	public void addMovie_casNominal() {
-	
-		MovieDetails movieDetails = new MovieDetails();
-		movieDetails.setPlot("quel suspens");
-
-		repository.addMovieDetails(movieDetails, -2L);
-		assertThat(movieDetails.getId()).as("On aurait du avoir l'id du movie")
-		.isEqualTo(-2L);
-
-	}
-
-	@Test
-	public void save_MethodeAdditionReview() {
+	public void save_casNominal() {
 		MovieWithDescription movie = new MovieWithDescription();
 		movie.setName("Inception 2");
 		movie.setDescription("Film enorme");
 		movie.setCertification(Certification.INTERDIT_MOINS_12);
-
-		Review review1 = new Review();
-		review1.setAuthor("paul");
-		review1.setContent("content 1");
-
-		Review review2 = new Review();
-		review2.setAuthor("mary");
-		review2.setContent("content 2");
-
-		movie.addReview(review1);
-		movie.addReview(review2);
-
 		repository.persist(movie);
 
 	}
 
 	@Test
-	public void testGet_lazyExceptionSurReview() {
-		MovieWithDescription movie = repository.findById(-1L);
-		
-		assertThrows(LazyInitializationException.class, () -> movie.getReviews().size());
+	public void save_casNominalFLuent() {
+		MovieWithDescription movie = new MovieWithDescription().setNameFluent("Inception 3")
+				.setDescriptionFluent("Film enorme")
+				.setCertificationFluent(Certification.INTERDIT_MOINS_12);
+		repository.persist(movie);
+
 	}
+
+	@Test
+	public void findById_casNominal() {
+		MovieWithDescription movie = repository.findById(-1L);
+		assertThat(movie.getName()).as("On aurait du trouver le film Inception").isEqualTo("Inception");
+		assertThat(movie.getCertification()).as("On aurait du trouver la bonne certif")
+				.isEqualTo(Certification.TOUS_PUBLIC);
+
+	}
+
 }

@@ -26,7 +26,7 @@ import fr.yopsolo.formation.hibernate4All.domain.Review;
 @ContextConfiguration(classes = { PersistenceConfigTest.class })
 @SqlConfig(dataSource = "dataSourceH2Test", transactionManager = "transactionManagerDeTest")
 @Sql(value = { "/datas/init-data-genre.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_CLASS)
-public class MovieRepositoryTestGenre {
+public class MovieRepositoryGenreTest {
 
 	@Autowired
 	private MovieWithDescriptionRepository repository;
