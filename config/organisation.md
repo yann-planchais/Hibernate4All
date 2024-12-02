@@ -15,4 +15,9 @@ Organisation du cours et du projet
 			ex : name pour la classe Genre
 		quand pas de clé : on utilise id et/ou les différents champs de l'entité 
 			ex : movieWithDescription
-		
+
+	- List/Set
+		1) version hibernate < 5.0.8 => bannir les listes car bug
+		2) 	lors d'un ajout, avec un Set il doit recuperer tous les objets pour vérifier l'unicité
+		  avec une liste, il ajoute simplement.
+		3) relation manyToMany => mieux Set car avec une liste, lors d'une suppression il supprime tout et réinsert les objets
