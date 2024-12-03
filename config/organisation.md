@@ -28,4 +28,10 @@ Organisation du cours et du projet
 		 * liaison oneToMany dans les classes Movie et Actor
 		 * classe MovieActor avec classe interne MovieActorId pour la cléId
 		 * embeddedId pour la clé primaire de cette table movie_actor
+4] HERITAGE
+	1) 1 table par classe concrete :
+	  - classe abtraite Watchable contenant name & description
+		@MappedSuperclass 
+	  - classe concrete MovieWithDescription 
+
 		 

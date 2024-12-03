@@ -1,0 +1,1 @@
+package contenant le code pour ce qui concerne le chapitre sur l'héritage avec JPA
