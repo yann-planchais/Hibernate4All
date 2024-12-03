@@ -8,19 +8,19 @@ import lombok.ToString;
 @MappedSuperclass
 @Getter
 @ToString
-public abstract class Watchable {
+public abstract class AbstraiteProduction {
 
 	@Column(nullable = false)
 	private String name;
 
 	private String description;
 
-	public Watchable setName(String pName) {
+	public AbstraiteProduction setName(String pName) {
 		name = pName;
 		return this;
 	}
 
-	public Watchable setDescription(String pDescription) {
+	public AbstraiteProduction setDescription(String pDescription) {
 		description = pDescription;
 		return this;
 	}
