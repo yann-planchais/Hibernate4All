@@ -6,6 +6,7 @@ package fr.yopsolo.formation.hibernate4All.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -59,6 +60,40 @@ public class MovieWithDescription {
 	// Definit les noms de la table et de ses attributs
 	@JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
 	private Set<Genre> genres = new HashSet<>();
+
+	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<MovieActor> moviesActors = new ArrayList<>();
+
+	public void addActor(Actor pActor, String pCharacter) {
+		MovieActor movieActor = new MovieActor(this, pActor).setCharacter(pCharacter);
+		moviesActors.add(movieActor);
+		pActor.getMoviesActors().add(movieActor);
+	}
+
+	public void removeActor(Actor pActor) {
+
+		for (Iterator<MovieActor> iteMmovieActor = moviesActors.iterator(); iteMmovieActor.hasNext();) {
+			MovieActor current = iteMmovieActor.next();
+			if (current.getMovie().equals(this) && current.getActor().equals(pActor)) {
+				iteMmovieActor.remove();
+				current.getActor().getMoviesActors().remove(current);
+				current.setActor(null);
+				current.setMovie(null);
+			}
+		}
+
+		MovieActor movieActor = new MovieActor(this, pActor);
+		moviesActors.remove(movieActor);
+		pActor.getMoviesActors().remove(movieActor);
+	}
+
+	public void updateActor(Actor pActor, String pCharacter) {
+		moviesActors.stream().forEach(movieActor -> {
+			if (this.equals(movieActor.getMovie()) && movieActor.getActor().equals(pActor)) {
+				movieActor.setCharacter(pCharacter);
+			}
+		});
+	}
 
 	public MovieWithDescription addGenre(Genre pGenreToAdd) {
 		if (pGenreToAdd != null) {

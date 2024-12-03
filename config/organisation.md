@@ -21,3 +21,11 @@ Organisation du cours et du projet
 		2) 	lors d'un ajout, avec un Set il doit recuperer tous les objets pour vérifier l'unicité
 		  avec une liste, il ajoute simplement.
 		3) relation manyToMany => mieux Set car avec une liste, lors d'une suppression il supprime tout et réinsert les objets
+		
+	- Association Ternaire 
+		Movie 1-----n movie_actor n-----1 Actor
+		                 character
+		 * liaison oneToMany dans les classes Movie et Actor
+		 * classe MovieActor avec classe interne MovieActorId pour la cléId
+		 * embeddedId pour la clé primaire de cette table movie_actor
+		 

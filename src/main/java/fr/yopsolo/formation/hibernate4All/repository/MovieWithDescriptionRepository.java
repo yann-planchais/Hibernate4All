@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import fr.yopsolo.formation.hibernate4All.domain.Actor;
 import fr.yopsolo.formation.hibernate4All.domain.MovieDetails;
 import fr.yopsolo.formation.hibernate4All.domain.MovieWithDescription;
 import jakarta.persistence.EntityManager;
@@ -152,4 +153,19 @@ public class MovieWithDescriptionRepository {
 		entityManager.persist(pMovieDetails);
 	}
 
+	@Transactional
+	public void addActor(MovieWithDescription pMovie, Actor pActor, String pCharacter) {
+		MovieWithDescription movieBdd = findById(pMovie.getId());
+		Actor actorBdd = entityManager.find(Actor.class, pActor.getId());
+		movieBdd.addActor(actorBdd, pCharacter);
+
+	}
+
+	@Transactional
+	public void removeActor(MovieWithDescription pMovie, Actor pActor) {
+		MovieWithDescription movieBdd = findById(pMovie.getId());
+		Actor actorBdd = entityManager.find(Actor.class, pActor.getId());
+		movieBdd.removeActor(actorBdd);
+
+	}
 }
