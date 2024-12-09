@@ -29,9 +29,23 @@ Organisation du cours et du projet
 		 * classe MovieActor avec classe interne MovieActorId pour la cléId
 		 * embeddedId pour la clé primaire de cette table movie_actor
 4] HERITAGE
-	1) 1 table par classe concrete :
+	1) 1 table par classe concrete => une table FILM et une table SERIE
 	  - classe abtraite Watchable contenant name & description
 		@MappedSuperclass 
-	  - classe concrete MovieWithDescription 
-
+	  - classe concrete HeritageConcreteFilm & HeritageConcreteSerie 
+	  - @GeneratedId dans chaque classe concrete
+	  
+	  Inconvenient : 
+	  	- 1 select par classe concrete
+	  	- pas d'association dans la classe abstraite
+	  Avantage : simple à mettre en oeuvre
+	  
+	2) garde même schema BDD que solution 1 
+		- dans classe abstraite : @GeneratedId & @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+		Avantage:
+			- requete plus simple car la classe abstraite est une entité
+			- on peut demander dans la requête les associations
+			- un seul select avec union au lieu de 2 selects distincts
+			
+		
 		 

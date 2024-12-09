@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
@@ -17,7 +16,6 @@ import fr.yopsolo.formation.hibernate4All.config.PersistenceConfig;
 import fr.yopsolo.formation.hibernate4All.heritage.concrete.domain.AbstraiteProduction;
 import fr.yopsolo.formation.hibernate4All.heritage.concrete.domain.HeritageConcreteFilm;
 import fr.yopsolo.formation.hibernate4All.heritage.concrete.domain.HeritageConcreteSerie;
-import fr.yopsolo.formation.hibernate4All.heritage.concrete.repository.HeritageConcreteRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
@@ -27,9 +25,6 @@ import jakarta.persistence.PersistenceContext;
 @Sql(value = {
 		"/datas/postgres/heritage/init-data-heritage-concrete.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_CLASS)
 public class HeritageConcreteRepositoryTest {
-
-	@Autowired
-	private HeritageConcreteRepository repository;
 
 	@PersistenceContext
 	private EntityManager entityManager;
