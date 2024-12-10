@@ -42,10 +42,13 @@ Organisation du cours et du projet
 	  
 	2) garde même schema BDD que solution 1 
 		- dans classe abstraite : @GeneratedId & @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+			=> attention à modifier dans le .sql l'id des inserts pour les classes concretes : 
+				sinon collision car l'id est porté par la classe abstraite 
 		Avantage:
 			- requete plus simple car la classe abstraite est une entité
 			- on peut demander dans la requête les associations
 			- un seul select avec union au lieu de 2 selects distincts
-			
+		Inconvénient
+			- select un peu compliqué à debugger (rajoute des null as colonne_non_existante && union de x select selon nb classes concretes)	
 		
 		 
