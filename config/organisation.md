@@ -50,5 +50,21 @@ Organisation du cours et du projet
 			- un seul select avec union au lieu de 2 selects distincts
 		Inconvénient
 			- select un peu compliqué à debugger (rajoute des null as colonne_non_existante && union de x select selon nb classes concretes)	
+	3) une seule table : la table Production avec 
+		- tous les champs	
+		- un champ bd_type représentant l'implémentation
 		
-		 
+		- sur l'abstract :
+			@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+			@DiscriminatorColumn(name="bd_type") => permet de différencier les classes 
+		- sur classes concretes : 
+		 	@DiscriminatorValue(name ="film") 
+		
+	Avantage : 
+		- la plus performante : un seul select sans union
+		- la plus simple à comprendre et à implémenter
+	Désavantage :
+		- 1 seule table. Donc les champs ne pourront pas avoir de contrainte not null (ie ils peuvent ne pas exister)
+			=> les admin bdd aime pas trop.
+	 	
+		 	
