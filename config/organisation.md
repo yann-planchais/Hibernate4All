@@ -66,5 +66,14 @@ Organisation du cours et du projet
 	Désavantage :
 		- 1 seule table. Donc les champs ne pourront pas avoir de contrainte not null (ie ils peuvent ne pas exister)
 			=> les admin bdd aime pas trop.
-	 	
-		 	
+	4) avec une clé étrangère : en bdd on a n+1 classes (n étant le nb de sous-classe ) avec un id dans chacune 
+		Abstract(id, name, description) Film (id, certification) Série(id, nbSaison)
+		Dans le code
+			- sous-classe : juste @Entity   	
+			- abstract : @Inheritance(strategy = InheritanceType.JOINED	)
+		Dans .sql:
+			- on insert les données dans AbstractProduction
+			- on insert le complément dans les sous-classes
+	Désavantage:
+		- requête compliqué : des join avec en plus des case sur les id
+		- en .sql, 2 requêtes d'insert pour chaque finalement entité
