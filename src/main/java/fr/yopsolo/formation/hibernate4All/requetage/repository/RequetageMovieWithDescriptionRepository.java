@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import fr.yopsolo.formation.hibernate4All.requetage.domain.RequetageCertification;
 import fr.yopsolo.formation.hibernate4All.requetage.domain.RequetageMovieWithDescription;
+import fr.yopsolo.formation.hibernate4All.requetage.domain.RequetageMovieWithDescription_;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -115,15 +116,17 @@ public class RequetageMovieWithDescriptionRepository {
 
 		Predicate predicat;
 		if ("<".equals(pOperateur)) {
-			predicat = builder.lessThan(root.get("certification"), pCertification);
+			predicat = builder.lessThan(root.get(RequetageMovieWithDescription_.CERTIFICATION), pCertification);
 		} else if ("<=".equals(pOperateur)) {
-			predicat = builder.lessThanOrEqualTo(root.get("certification"), pCertification);
+			predicat = builder.lessThanOrEqualTo(root.get(RequetageMovieWithDescription_.CERTIFICATION),
+					pCertification);
 		} else if ("=".equals(pOperateur)) {
-			predicat = builder.equal(root.get("certification"), pCertification);
+			predicat = builder.equal(root.get(RequetageMovieWithDescription_.CERTIFICATION), pCertification);
 		} else if (">".equals(pOperateur)) {
-			predicat = builder.greaterThan(root.get("certification"), pCertification);
+			predicat = builder.greaterThan(root.get(RequetageMovieWithDescription_.CERTIFICATION), pCertification);
 		} else if (">=".equals(pOperateur)) {
-			predicat = builder.greaterThanOrEqualTo(root.get("certification"), pCertification);
+			predicat = builder.greaterThanOrEqualTo(root.get(RequetageMovieWithDescription_.CERTIFICATION),
+					pCertification);
 		} else {
 			throw new IllegalArgumentException("Operateur non reconnu : " + pOperateur);
 		}
