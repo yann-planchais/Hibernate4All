@@ -50,7 +50,7 @@ public class EqualsAndHashcodeTest {
 	@Test
 	void testEquals() {
 		MovieWithDescription movie = new MovieWithDescription();
-		movie.setName("Dune");
+		movie.setName("Dune Equals");
 		repository.persist(movie);
 
 		MovieWithDescription movieBDD = repository.findById(movie.getId());

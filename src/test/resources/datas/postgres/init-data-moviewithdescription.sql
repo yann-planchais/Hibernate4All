@@ -1,4 +1,4 @@
-truncate table Review, Award, MovieWithDescription, movie_details, genre, movie_genre;
+truncate table movie_details, movie_genre, movie_actor, genre, Review, Award, MovieWithDescription;
 
 
 insert into MovieWithDescription (name, certification, description, id) values ('Inception',1,'desc Inception', -1);

@@ -1,5 +1,4 @@
-truncate table movie_genre, requetagemovie_requetagegenre, RequetageReview, RequetageGenre, RequetageMovieWithDescription;
-
+truncate table RequetageReview, RequetageMovieWithDescription, RequetageGenre, movie_genre;
 
 
 insert into RequetageMovieWithDescription (name, certification, description, id) values ('Inception',1,'desc Inception', -1);

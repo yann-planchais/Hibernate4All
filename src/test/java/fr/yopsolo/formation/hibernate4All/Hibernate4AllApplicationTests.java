@@ -1,9 +1,14 @@
 package fr.yopsolo.formation.hibernate4All;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@SpringBootTest
+import fr.yopsolo.formation.hibernate4All.config.PersistenceConfigTest;
+
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = { PersistenceConfigTest.class })
 class Hibernate4AllApplicationTests {
 
 	@Test

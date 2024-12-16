@@ -1,11 +1,8 @@
 package fr.yopsolo.formation.hibernate4All.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.hibernate.LazyInitializationException;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.hibernate.LazyInitializationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,8 +75,8 @@ public class MovieRepositoryReviewTest {
 
 	@Test
 	public void testGet_lazyExceptionSurReview() {
-		MovieWithDescription movie = repository.findById(-1L);
-		
+		MovieWithDescription movie = repository.findById(-11L);
+
 		assertThrows(LazyInitializationException.class, () -> movie.getReviews().size());
 	}
 }

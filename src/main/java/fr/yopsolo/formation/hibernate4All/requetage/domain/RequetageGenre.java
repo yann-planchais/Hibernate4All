@@ -20,24 +20,22 @@ public class RequetageGenre {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	
+
 	private String name;
 
-	
-	@ManyToMany(mappedBy = "genres")
+	@ManyToMany(mappedBy = "requetageGenres")
 	private Set<RequetageMovieWithDescription> movies = new HashSet<>();
-	
+
 	@Override
 	public int hashCode() {
-		return Objects.hash( name);
+		return Objects.hash(name);
 	}
-	
-	
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
+		}
 		if (!(obj instanceof RequetageGenre)) {
 			return false;
 		}

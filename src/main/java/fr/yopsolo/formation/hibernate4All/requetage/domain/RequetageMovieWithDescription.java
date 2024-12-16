@@ -49,25 +49,25 @@ public class RequetageMovieWithDescription {
 	private RequetageCertification certification;
 
 	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<RequetageReview> reviews = new ArrayList<RequetageReview>();
+	private List<RequetageReview> requetageReviews = new ArrayList<RequetageReview>();
 
 	// Les objets Genre seron persisté lors d'un persist ou d'un merge du movie
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	// Definit les noms de la table et de ses attributs
-	@JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
-	private Set<RequetageGenre> genres = new HashSet<>();
+	@JoinTable(name = "requetagemovie_requetagegenre", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
+	private Set<RequetageGenre> requetageGenres = new HashSet<>();
 
 	public RequetageMovieWithDescription addGenre(RequetageGenre pGenreToAdd) {
 		if (pGenreToAdd != null) {
-			this.genres.add(pGenreToAdd);
+			this.requetageGenres.add(pGenreToAdd);
 			pGenreToAdd.getMovies().add(this);
 		}
 		return this;
 	}
 
 	public RequetageMovieWithDescription removeGenre(RequetageGenre pGenreToSuppress) {
-		if (pGenreToSuppress != null && this.genres.contains(pGenreToSuppress)) {
-			genres.remove(pGenreToSuppress);
+		if (pGenreToSuppress != null && this.requetageGenres.contains(pGenreToSuppress)) {
+			requetageGenres.remove(pGenreToSuppress);
 			pGenreToSuppress.getMovies().remove(this);
 		}
 
@@ -75,20 +75,20 @@ public class RequetageMovieWithDescription {
 	}
 
 	public Set<RequetageGenre> getGenres() {
-		return Collections.unmodifiableSet(this.genres);
+		return Collections.unmodifiableSet(this.requetageGenres);
 	}
 
 	public RequetageMovieWithDescription addReview(RequetageReview pReview) {
 		if (pReview != null) {
-			this.reviews.add(pReview);
+			this.requetageReviews.add(pReview);
 			pReview.setMovie(this);
 		}
 		return this;
 	}
 
 	public RequetageMovieWithDescription removeReview(RequetageReview pReview) {
-		if (pReview != null && this.reviews.contains(pReview)) {
-			reviews.remove(pReview);
+		if (pReview != null && this.requetageReviews.contains(pReview)) {
+			requetageReviews.remove(pReview);
 			pReview.setMovie(null);
 		}
 
