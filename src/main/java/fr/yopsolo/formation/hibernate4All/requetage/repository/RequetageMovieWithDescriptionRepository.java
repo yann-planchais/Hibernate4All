@@ -78,7 +78,13 @@ public class RequetageMovieWithDescriptionRepository {
 	}
 
 	/**
-	 * JPQL name fait référence au nom de l'attribut et non à la colonne en BDD
+	 *
+	 * JPQL On utilise les noms Java :
+	 * <ul>
+	 * <li>RequetageMovieWithDescription pour le nom de la table
+	 * <li>name fait référence au nom de l'attribut et non à la colonne en BDD
+	 * </ul>
+	 * Attention au refacto
 	 *
 	 * @param pNom
 	 * @return
