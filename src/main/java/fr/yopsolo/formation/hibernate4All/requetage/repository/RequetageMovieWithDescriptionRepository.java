@@ -7,9 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import fr.yopsolo.formation.hibernate4All.requetage.domain.RequetageCertification;
 import fr.yopsolo.formation.hibernate4All.requetage.domain.RequetageMovieWithDescription;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 
 @Repository
@@ -96,4 +101,36 @@ public class RequetageMovieWithDescriptionRepository {
 				.setParameter("param", pNom)
 				.getResultList();
 	}
+
+	public List<RequetageMovieWithDescription> findByCertificationByCriteria(String pOperateur,
+			RequetageCertification pCertification) {
+
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<RequetageMovieWithDescription> query = builder.createQuery(RequetageMovieWithDescription.class);
+
+		// from de la requete
+		Root<RequetageMovieWithDescription> root = query.from(RequetageMovieWithDescription.class);
+
+		// Clause where
+
+		Predicate predicat;
+		if ("<".equals(pOperateur)) {
+			predicat = builder.lessThan(root.get("certification"), pCertification);
+		} else if ("<=".equals(pOperateur)) {
+			predicat = builder.lessThanOrEqualTo(root.get("certification"), pCertification);
+		} else if ("=".equals(pOperateur)) {
+			predicat = builder.equal(root.get("certification"), pCertification);
+		} else if (">".equals(pOperateur)) {
+			predicat = builder.greaterThan(root.get("certification"), pCertification);
+		} else if (">=".equals(pOperateur)) {
+			predicat = builder.greaterThanOrEqualTo(root.get("certification"), pCertification);
+		} else {
+			throw new IllegalArgumentException("Operateur non reconnu : " + pOperateur);
+		}
+
+		query.where(predicat);
+
+		return entityManager.createQuery(query).getResultList();
+	}
+
 }

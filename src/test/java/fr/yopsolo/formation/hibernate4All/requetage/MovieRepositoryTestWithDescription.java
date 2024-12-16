@@ -43,4 +43,12 @@ public class MovieRepositoryTestWithDescription {
 
 	}
 
+	@Test
+	void findbyCriteria_Certification_casNominal() {
+		List<RequetageMovieWithDescription> result = repository.findByCertificationByCriteria("<=",
+				RequetageCertification.INTERDIT_MOINS_12);
+		assertThat(result).as("On devrait retrouver 1 film").hasSize(1);
+
+	}
+
 }
