@@ -50,4 +50,34 @@ public class RequetageJPQLJoinRepository {
 				.getResultList();
 	}
 
+	/**
+	 * Ici on va se trouver avec un produit cartésien en requete on aura nb genre X
+	 * nb reviews ligne de retournées
+	 *
+	 * @return
+	 */
+	public List<RequetageJPQLJoinMovie> getMoviesWithReviewWithGenreJPQL() {
+		return entityManager.createQuery(
+				"select m from RequetageJPQLJoinMovie m left join fetch m.requetageJPQLJoinReviews left join fetch m.requetageJPQLJoinGenres",
+				RequetageJPQLJoinMovie.class).getResultList();
+	}
+
+	/**
+	 * On sépare en 2 requêtes afin d'éviter des problèmes de performances
+	 *
+	 * @return
+	 */
+	@Transactional
+	public List<RequetageJPQLJoinMovie> getMoviesWithReviewWithGenreJPQL_SansProduitCartesien() {
+
+		List<RequetageJPQLJoinMovie> movies = entityManager
+				.createQuery("select m from RequetageJPQLJoinMovie m left join fetch m.requetageJPQLJoinReviews",
+						RequetageJPQLJoinMovie.class)
+				.getResultList();
+
+		return entityManager.createQuery(
+				"select m from RequetageJPQLJoinMovie m left join fetch m.requetageJPQLJoinGenres where m in (:moviesP)",
+				RequetageJPQLJoinMovie.class).setParameter("moviesP", movies).getResultList();
+	}
+
 }

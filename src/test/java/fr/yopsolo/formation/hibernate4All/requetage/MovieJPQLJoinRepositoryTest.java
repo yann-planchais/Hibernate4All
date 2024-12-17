@@ -51,4 +51,20 @@ public class MovieJPQLJoinRepositoryTest {
 		RequetageJPQLJoinMovie inception = movies.stream().filter(m -> m.getId().equals(-1L)).findFirst().get();
 		assertThat(inception.getRequetageJPQLJoinReviews()).as("On retrouve les revues").hasSize(2);
 	}
+
+	@Test
+	void getMoviesWithReviewsWithGenre_casNominal() {
+		List<RequetageJPQLJoinMovie> movies = repository.getMoviesWithReviewWithGenreJPQL();
+		assertThat(movies).as("On retrouve le film").hasSize(2);
+		RequetageJPQLJoinMovie inception = movies.stream().filter(m -> m.getId().equals(-1L)).findFirst().get();
+		assertThat(inception.getRequetageJPQLJoinReviews()).as("On retrouve les revues").hasSize(2);
+	}
+
+	@Test
+	void getMoviesWithReviewsWithGenre_sansProduitCartesien_casNominal() {
+		List<RequetageJPQLJoinMovie> movies = repository.getMoviesWithReviewWithGenreJPQL_SansProduitCartesien();
+		assertThat(movies).as("On retrouve le film").hasSize(2);
+		RequetageJPQLJoinMovie inception = movies.stream().filter(m -> m.getId().equals(-1L)).findFirst().get();
+		assertThat(inception.getRequetageJPQLJoinReviews()).as("On retrouve les revues").hasSize(2);
+	}
 }
